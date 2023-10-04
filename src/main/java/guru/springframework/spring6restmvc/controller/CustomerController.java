@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,5 +36,15 @@ public class CustomerController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/customers/"+savedCustomer.getId());
         return new ResponseEntity(headers, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "{id}")
+    public ResponseEntity updateById(@PathVariable("id") UUID id, @RequestBody Customer customer) {
+        if(customerService.getCustomerById(id) != null) {
+            customerService.updateById(id, customer);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }
