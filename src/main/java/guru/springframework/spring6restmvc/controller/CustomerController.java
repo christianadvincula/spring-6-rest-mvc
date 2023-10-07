@@ -47,4 +47,14 @@ public class CustomerController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity deleteById(@PathVariable("id") UUID id) {
+        if(customerService.getCustomerById(id) != null) {
+            customerService.deleteById(id);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 }
