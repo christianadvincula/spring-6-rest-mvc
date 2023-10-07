@@ -56,4 +56,14 @@ public class BeerController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PatchMapping(value = "{beerId}")
+    public ResponseEntity patchById(@PathVariable("beerId") UUID id, @RequestBody Beer beer) {
+        if(beerService.getBeerById(id) != null) {
+            beerService.patchById(id, beer);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 }
